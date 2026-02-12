@@ -1,0 +1,150 @@
+@import 'tailwindcss';
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap');
+
+@theme {
+	--font-display: 'Playfair Display', serif;
+	--font-body: 'DM Sans', sans-serif;
+
+	--color-sand-50: #FDF9F3;
+	--color-sand-100: #FAF3E8;
+	--color-sand-200: #F0E4CE;
+	--color-sand-300: #E2CFA8;
+	--color-sand-400: #D4B87E;
+	--color-sand-500: #C4A265;
+	--color-sand-600: #A88445;
+	--color-sand-700: #7D6233;
+	--color-sand-800: #524123;
+	--color-sand-900: #2B2112;
+
+	--color-coral-50: #FEF2EE;
+	--color-coral-100: #FDDDD4;
+	--color-coral-200: #F9B8A6;
+	--color-coral-300: #F19279;
+	--color-coral-400: #E07A5F;
+	--color-coral-500: #C75D42;
+	--color-coral-600: #A84530;
+	--color-coral-700: #7E3424;
+	--color-coral-800: #542218;
+	--color-coral-900: #311410;
+
+	--color-ocean-50: #EEF8F7;
+	--color-ocean-100: #D4EFEC;
+	--color-ocean-200: #A9DDD7;
+	--color-ocean-300: #6EC5BC;
+	--color-ocean-400: #2A9D8F;
+	--color-ocean-500: #1F7A6F;
+	--color-ocean-600: #175C54;
+	--color-ocean-700: #10423C;
+	--color-ocean-800: #0A2B27;
+	--color-ocean-900: #051614;
+
+	--color-volcanic-50: #F7F5F4;
+	--color-volcanic-100: #E8E4E1;
+	--color-volcanic-200: #CFC8C2;
+	--color-volcanic-300: #A89E95;
+	--color-volcanic-400: #7D7369;
+	--color-volcanic-500: #5C534B;
+	--color-volcanic-600: #3E3731;
+	--color-volcanic-700: #2B2521;
+	--color-volcanic-800: #1A1614;
+	--color-volcanic-900: #0D0B0A;
+
+	--color-navy-50: #EDF3F5;
+	--color-navy-100: #D2E2E7;
+	--color-navy-200: #A3C3CD;
+	--color-navy-300: #6C9DAE;
+	--color-navy-400: #3B7A8E;
+	--color-navy-500: #264653;
+	--color-navy-600: #1D3640;
+	--color-navy-700: #14262D;
+	--color-navy-800: #0C171C;
+	--color-navy-900: #060B0D;
+}
+
+* {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+html {
+	font-family: var(--font-body);
+	color: var(--color-volcanic-800);
+}
+
+body {
+	background-color: var(--color-sand-50);
+	position: relative;
+}
+
+/* Grain overlay */
+body::after {
+	content: '';
+	position: fixed;
+	inset: 0;
+	opacity: 0.025;
+	pointer-events: none;
+	z-index: 9999;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+	background-repeat: repeat;
+	background-size: 128px 128px;
+}
+
+/* Staggered entrance animations */
+@keyframes fadeSlideUp {
+	from {
+		opacity: 0;
+		transform: translateY(16px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+	from {
+		opacity: 0;
+		transform: scale(0.96);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+.animate-fade-up {
+	animation: fadeSlideUp 0.5s ease-out both;
+}
+
+.animate-fade-in {
+	animation: fadeIn 0.4s ease-out both;
+}
+
+.animate-scale-in {
+	animation: scaleIn 0.35s ease-out both;
+}
+
+/* Warm shadows */
+.shadow-warm {
+	box-shadow:
+		0 1px 3px rgba(164, 132, 69, 0.06),
+		0 4px 12px rgba(164, 132, 69, 0.08);
+}
+
+.shadow-warm-lg {
+	box-shadow:
+		0 2px 8px rgba(164, 132, 69, 0.08),
+		0 8px 32px rgba(164, 132, 69, 0.12);
+}
+
+.shadow-warm-xl {
+	box-shadow:
+		0 4px 12px rgba(164, 132, 69, 0.1),
+		0 16px 48px rgba(164, 132, 69, 0.15);
+}
