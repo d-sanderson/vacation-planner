@@ -37,6 +37,7 @@
 	"dependencies": {
 		"@lottiefiles/dotlottie-wc": "^0.8.15",
 		"better-auth": "1.4.4",
+		"mapbox-gl": "^3.18.1",
 		"svelte-dnd-action": "^0.9.69"
 	},
 	"pnpm": {

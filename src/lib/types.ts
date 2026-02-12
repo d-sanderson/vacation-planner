@@ -31,6 +31,8 @@ export interface ActivityRow {
 	startTime: string | null;
 	endTime: string | null;
 	location: string | null;
+	latitude: string | null;
+	longitude: string | null;
 	category: ActivityCategory | null;
 	notes: string | null;
 	sortOrder: number;

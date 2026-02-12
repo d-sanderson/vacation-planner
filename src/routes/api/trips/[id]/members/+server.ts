@@ -36,7 +36,7 @@ export const POST: RequestHandler = async (event) => {
 		.where(eq(user.email, body.email));
 
 	if (!foundUser) {
-		throw error(404, 'No user found with that email');
+		throw error(404, 'No user found with that email they need to create an account first');
 	}
 
 	const [existing] = await event.locals.db

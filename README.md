@@ -27,3 +27,16 @@ OR
 
 - Develop locally
 `pnpm run dev`
+
+# Schema Changes
+
+After modifying `src/lib/server/db/schema.ts`:
+
+1. Generate a migration
+`pnpm run db:generate`
+
+2. Apply locally
+`pnpm run db:migrate`
+
+3. Apply to Cloudflare D1
+`wrangler d1 migrations apply vacation-planner-db --remote`

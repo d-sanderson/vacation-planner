@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { ActivityRow, ActivityCategory } from '$lib/types';
+	import MapboxAddressSearch from './MapboxAddressSearch.svelte';
 
 	interface Props {
 		activity?: ActivityRow | null;
@@ -15,6 +16,8 @@
 	let startTime = $state(activity?.startTime ?? '');
 	let endTime = $state(activity?.endTime ?? '');
 	let location = $state(activity?.location ?? '');
+	let latitude = $state(activity?.latitude ?? null);
+	let longitude = $state(activity?.longitude ?? null);
 	let category = $state<ActivityCategory | ''>(activity?.category ?? '');
 	let notes = $state(activity?.notes ?? '');
 	let loading = $state(false);
@@ -40,6 +43,8 @@
 			startTime: startTime || null,
 			endTime: endTime || null,
 			location: location || null,
+			latitude: latitude || null,
+			longitude: longitude || null,
 			category: category || null,
 			notes: notes || null,
 		};
@@ -132,13 +137,21 @@
 				</div>
 
 				<div>
-					<label for="location" class="block text-xs font-semibold uppercase tracking-[0.1em] text-volcanic-400 mb-1.5">Location</label>
-					<input
-						id="location"
-						type="text"
-						bind:value={location}
-						class="w-full px-4 py-2.5 bg-sand-50 border border-sand-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-coral-300 focus:border-transparent text-volcanic-700 placeholder-volcanic-300 transition-all"
-						placeholder="Where is this?"
+					<label class="block text-xs font-semibold uppercase tracking-[0.1em] text-volcanic-400 mb-1.5">Location</label>
+					<MapboxAddressSearch
+						value={location}
+						{latitude}
+						{longitude}
+						onSelect={(result) => {
+							location = result.placeName;
+							latitude = result.latitude;
+							longitude = result.longitude;
+						}}
+						onClear={() => {
+							location = '';
+							latitude = null;
+							longitude = null;
+						}}
 					/>
 				</div>
 

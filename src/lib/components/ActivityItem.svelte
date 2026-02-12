@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { ActivityRow } from '$lib/types';
 	import { categoryConfig } from '$lib/categoryConfig';
+	import { PUBLIC_MAPBOX_TOKEN } from '$env/static/public';
 
 	interface Props {
 		activity: ActivityRow;
@@ -55,12 +56,32 @@
 
 			<!-- Location -->
 			{#if activity.location}
-				<p class="text-sm text-volcanic-400 mt-0.5 flex items-center gap-1">
-					<svg class="w-3 h-3 shrink-0 text-sand-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-					</svg>
-					<span class="font-light">{activity.location}</span>
-				</p>
+				{#if activity.latitude && activity.longitude}
+					<a
+						href="https://www.google.com/maps/search/?api=1&query={activity.latitude},{activity.longitude}"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="text-sm text-volcanic-400 mt-0.5 flex items-center gap-1 hover:text-ocean-500 transition-colors group/loc"
+					>
+						<svg class="w-3 h-3 shrink-0 text-sand-400 group-hover/loc:text-ocean-400 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+						</svg>
+						<span class="font-light underline decoration-sand-300 underline-offset-2 group-hover/loc:decoration-ocean-300">{activity.location}</span>
+					</a>
+					<img
+						src="https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-s+E8734A({activity.longitude},{activity.latitude})/{activity.longitude},{activity.latitude},14,0/320x140@2x?access_token={PUBLIC_MAPBOX_TOKEN}"
+						alt="Map of {activity.location}"
+						class="mt-2 rounded-lg border border-sand-200 w-full max-w-[320px] shadow-warm"
+						loading="lazy"
+					/>
+				{:else}
+					<p class="text-sm text-volcanic-400 mt-0.5 flex items-center gap-1">
+						<svg class="w-3 h-3 shrink-0 text-sand-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+						</svg>
+						<span class="font-light">{activity.location}</span>
+					</p>
+				{/if}
 			{/if}
 
 			<!-- Notes -->

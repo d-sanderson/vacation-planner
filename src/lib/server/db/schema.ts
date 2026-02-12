@@ -51,6 +51,8 @@ export const activity = sqliteTable(
 		startTime: text('start_time'),
 		endTime: text('end_time'),
 		location: text('location'),
+		latitude: text('latitude'),
+		longitude: text('longitude'),
 		category: text('category'),
 		notes: text('notes'),
 		sortOrder: integer('sort_order').notNull().default(0),

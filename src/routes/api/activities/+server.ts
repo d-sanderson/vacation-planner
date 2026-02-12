@@ -17,6 +17,8 @@ export const POST: RequestHandler = async (event) => {
 		startTime: body.startTime ?? null,
 		endTime: body.endTime ?? null,
 		location: body.location ?? null,
+		latitude: body.latitude ?? null,
+		longitude: body.longitude ?? null,
 		category: body.category ?? null,
 		notes: body.notes ?? null,
 		sortOrder: body.sortOrder ?? 0,

@@ -16,6 +16,8 @@ export const PUT: RequestHandler = async (event) => {
 			startTime: body.startTime,
 			endTime: body.endTime,
 			location: body.location,
+			latitude: body.latitude,
+			longitude: body.longitude,
 			category: body.category,
 			notes: body.notes,
 			sortOrder: body.sortOrder,
