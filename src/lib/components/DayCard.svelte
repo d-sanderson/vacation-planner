@@ -18,6 +18,7 @@
 	let { day, dayNumber = 1, isAdmin = false, weather = null, onEditActivity, onDeleteActivity, onAddActivity }: Props = $props();
 
 	let expanded = $state(true);
+	let reorderMode = $state(false);
 	let items = $state(day.activities.map((a) => ({ ...a })));
 
 	$effect(() => {
@@ -71,8 +72,8 @@
 					</div>
 				{/if}
 			</div>
-			<div class="flex items-center gap-3">
-				<span class="text-[11px] font-medium text-volcanic-300 bg-sand-100 px-2.5 py-1 rounded-full">
+			<div class="flex items-center gap-1.5 md:gap-3 shrink-0 ml-2">
+				<span class="hidden sm:inline text-[11px] font-medium text-volcanic-300 bg-sand-100 px-2.5 py-1 rounded-full">
 					{items.length} {items.length === 1 ? 'activity' : 'activities'}
 				</span>
 				<svg
@@ -94,7 +95,7 @@
 				{:else}
 					<!-- Timeline -->
 					<div class="relative ml-3 pl-6 border-l border-dashed border-sand-300/80 space-y-1 pt-1">
-						{#if isAdmin}
+						{#if isAdmin && reorderMode}
 							<div
 								use:dndzone={{ items, flipDurationMs: 200 }}
 								onconsider={handleDndConsider}
@@ -112,22 +113,35 @@
 							</div>
 						{:else}
 							{#each items as activity (activity.id)}
-								<ActivityItem {activity} />
+								<ActivityItem {activity} {isAdmin} onEdit={onEditActivity} onDelete={onDeleteActivity} />
 							{/each}
 						{/if}
 					</div>
 				{/if}
 
 				{#if isAdmin}
-					<button
-						onclick={() => onAddActivity?.(day.id)}
-						class="mt-5 ml-3 inline-flex items-center gap-1.5 text-sm text-coral-400 hover:text-coral-600 font-medium transition-colors"
-					>
-						<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-							<path d="M12 5v14m-7-7h14"/>
-						</svg>
-						Add activity
-					</button>
+					<div class="mt-5 ml-3 flex items-center gap-3">
+						<button
+							onclick={() => onAddActivity?.(day.id)}
+							class="inline-flex items-center gap-1.5 text-sm text-coral-400 hover:text-coral-600 font-medium transition-colors"
+						>
+							<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+								<path d="M12 5v14m-7-7h14"/>
+							</svg>
+							Add activity
+						</button>
+						{#if items.length > 1}
+							<button
+								onclick={() => (reorderMode = !reorderMode)}
+								class="inline-flex items-center gap-1.5 text-sm font-medium transition-colors {reorderMode ? 'text-ocean-500' : 'text-volcanic-300 hover:text-volcanic-500'}"
+							>
+								<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
+								</svg>
+								{reorderMode ? 'Done' : 'Reorder'}
+							</button>
+						{/if}
+					</div>
 				{/if}
 			</div>
 		{/if}

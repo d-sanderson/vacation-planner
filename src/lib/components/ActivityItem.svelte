@@ -97,7 +97,7 @@
 
 		<!-- Admin actions -->
 		{#if isAdmin}
-			<div class="flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 mt-1">
+			<div class="flex gap-0.5 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity shrink-0 mt-1">
 				<button
 					onclick={() => onEdit?.(activity)}
 					class="p-1.5 rounded-lg text-volcanic-300 hover:text-ocean-500 hover:bg-ocean-50 transition-all"

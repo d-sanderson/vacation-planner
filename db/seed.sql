@@ -9,7 +9,7 @@ VALUES (
   'Oahu, Hawaii',
   '2025-02-19',
   '2025-02-23',
-  'Birthday celebration trip to Oahu. Guest groups: Long Beach (Kimmy, Linda, Tudy, Thien, Clarice), ABQ (Baw, Thy, Bu, Claudia, Ginger), TX (Kathy, Ellaine). Points of interest: Banzai Pipeline at Ehukai Beach Park, Rocky Point, Shark''s Cove, Ka''ena Point. Turtle spotting: Laniakea Beach.',
+  'Baw is turning 40 and we''re taking over Oahu to celebrate! Five days of beach bumming, booze cruising, omakase feasting, and turtle hunting with the whole crew. Guest squads: Long Beach (Kimmy, Linda, Tudy, Thien, Clarice), ABQ (Baw, Thy, Bu, Claudia, Ginger, David, Phoenix), TX (Kathy, Ellaine). Points of interest: Banzai Pipeline at Ehukai Beach Park, Rocky Point, Shark''s Cove, Ka''ena Point. Turtle spotting: Laniakea Beach.',
   unixepoch() * 1000
 );
 
