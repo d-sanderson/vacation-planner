@@ -3,7 +3,7 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/state';
 	import { authClient } from '$lib/auth-client';
-	import { invalidateAll } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 
 	let { children } = $props();
@@ -17,7 +17,7 @@
 
 	async function handleLogout() {
 		await authClient.signOut();
-		invalidateAll();
+		await goto('/', { invalidateAll: true });
 	}
 </script>
 

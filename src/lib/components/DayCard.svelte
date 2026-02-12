@@ -1,18 +1,21 @@
 <script lang="ts">
 	import type { DayWithActivities, ActivityRow } from '$lib/types';
+	import type { DayWeather } from '$lib/server/weather';
 	import ActivityItem from './ActivityItem.svelte';
+	import WeatherBar from './WeatherBar.svelte';
 	import { dndzone } from 'svelte-dnd-action';
 
 	interface Props {
 		day: DayWithActivities;
 		dayNumber?: number;
 		isAdmin?: boolean;
+		weather?: DayWeather | null;
 		onEditActivity?: (a: ActivityRow) => void;
 		onDeleteActivity?: (a: ActivityRow) => void;
 		onAddActivity?: (dayId: string) => void;
 	}
 
-	let { day, dayNumber = 1, isAdmin = false, onEditActivity, onDeleteActivity, onAddActivity }: Props = $props();
+	let { day, dayNumber = 1, isAdmin = false, weather = null, onEditActivity, onDeleteActivity, onAddActivity }: Props = $props();
 
 	let expanded = $state(true);
 	let items = $state(day.activities.map((a) => ({ ...a })));
@@ -62,6 +65,11 @@
 			<div>
 				<h3 class="font-display text-lg font-semibold text-volcanic-800">{day.title}</h3>
 				<p class="text-sm text-volcanic-300 font-light mt-0.5">{formatDayDate(day.date)}</p>
+				{#if weather}
+					<div class="mt-1.5" onclick={(e) => e.stopPropagation()}>
+						<WeatherBar {weather} />
+					</div>
+				{/if}
 			</div>
 			<div class="flex items-center gap-3">
 				<span class="text-[11px] font-medium text-volcanic-300 bg-sand-100 px-2.5 py-1 rounded-full">

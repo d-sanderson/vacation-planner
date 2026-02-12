@@ -2,12 +2,13 @@ import type { PageServerLoad } from './$types';
 import { trip, day, activity, tripMember, comment, user } from '$lib/server/db/schema';
 import { eq, asc, desc } from 'drizzle-orm';
 import { error } from '@sveltejs/kit';
+import { fetchWeather } from '$lib/server/weather';
 
 export const load: PageServerLoad = async ({ params, locals }) => {
 	const [foundTrip] = await locals.db.select().from(trip).where(eq(trip.id, params.id));
 	if (!foundTrip) throw error(404, 'Trip not found');
 
-	const [days, members, comments] = await Promise.all([
+	const [days, members, comments, weather] = await Promise.all([
 		locals.db
 			.select()
 			.from(day)
@@ -49,6 +50,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 			.leftJoin(user, eq(comment.userId, user.id))
 			.where(eq(comment.tripId, params.id))
 			.orderBy(desc(comment.createdAt)),
+		fetchWeather(foundTrip.destination, foundTrip.startDate, foundTrip.endDate),
 	]);
 
 	const daysWithActivities = await Promise.all(
@@ -62,7 +64,11 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 		})
 	);
 
+	// Map weather data by date for easy lookup
+	const weatherByDate = new Map(weather.map((w) => [w.date, w]));
+
 	return {
 		trip: { ...foundTrip, days: daysWithActivities, members, comments },
+		weather: Object.fromEntries(weatherByDate),
 	};
 };

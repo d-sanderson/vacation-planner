@@ -7,6 +7,7 @@ export interface TripRow {
 	startDate: string;
 	endDate: string;
 	description: string | null;
+	isPublic: boolean;
 	createdBy: string | null;
 	createdAt: Date;
 	updatedAt: Date | null;

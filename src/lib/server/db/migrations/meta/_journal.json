@@ -15,6 +15,13 @@
       "when": 1770864859015,
       "tag": "0001_daffy_proudstar",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1770875803594,
+      "tag": "0002_medical_scream",
+      "breakpoints": true
     }
   ]
 }

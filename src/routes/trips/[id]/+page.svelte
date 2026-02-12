@@ -15,6 +15,21 @@
 	let editingActivity = $state<ActivityRow | null>(null);
 	let formDayId = $state('');
 	let copied = $state(false);
+	let togglingPublic = $state(false);
+
+	async function handleTogglePublic() {
+		togglingPublic = true;
+		try {
+			await fetch(`/api/trips/${data.trip.id}`, {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ ...data.trip, isPublic: !data.trip.isPublic }),
+			});
+			await invalidateAll();
+		} finally {
+			togglingPublic = false;
+		}
+	}
 
 	function formatDate(dateStr: string): string {
 		const d = new Date(dateStr + 'T00:00:00');
@@ -104,10 +119,32 @@
 				</h1>
 			</div>
 
+			<div class="flex items-center gap-2 shrink-0 mt-2">
+			{#if isAdmin}
+				<button
+					onclick={handleTogglePublic}
+					disabled={togglingPublic}
+					class="inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition-all shadow-warm {data.trip.isPublic ? 'border-ocean-200 text-ocean-600 bg-ocean-50/40 hover:bg-ocean-50' : 'border-sand-200 text-volcanic-400 hover:text-volcanic-600 hover:border-sand-300'}"
+					title={data.trip.isPublic ? 'Trip is public — click to make private' : 'Trip is private — click to make public'}
+				>
+					{#if data.trip.isPublic}
+						<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+						</svg>
+						Public
+					{:else}
+						<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+						</svg>
+						Private
+					{/if}
+				</button>
+			{/if}
+
 			<!-- Share button -->
 			<button
 				onclick={handleShare}
-				class="shrink-0 mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-sand-200 text-volcanic-500 hover:text-coral-500 hover:border-coral-200 hover:bg-coral-50/40 transition-all text-sm font-medium shadow-warm"
+				class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-sand-200 text-volcanic-500 hover:text-coral-500 hover:border-coral-200 hover:bg-coral-50/40 transition-all text-sm font-medium shadow-warm"
 			>
 				{#if copied}
 					<svg class="w-4 h-4 text-ocean-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -121,6 +158,7 @@
 					Share
 				{/if}
 			</button>
+		</div>
 		</div>
 
 		<div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-volcanic-400">
@@ -162,6 +200,7 @@
 					{day}
 					dayNumber={i + 1}
 					{isAdmin}
+					weather={data.weather[day.date] ?? null}
 					onEditActivity={handleEditActivity}
 					onDeleteActivity={handleDeleteActivity}
 					onAddActivity={handleAddActivity}

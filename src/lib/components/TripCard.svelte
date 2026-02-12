@@ -7,6 +7,7 @@
 			startDate: string;
 			endDate: string;
 			description: string | null;
+			isPublic?: boolean;
 		};
 	}
 
@@ -37,6 +38,9 @@
 				<span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-ocean-400">
 					{trip.destination}
 				</span>
+				{#if trip.isPublic}
+					<span class="text-[9px] font-semibold uppercase tracking-wider bg-ocean-50 text-ocean-500 px-2 py-0.5 rounded-full">Public</span>
+				{/if}
 			</div>
 			<span class="text-xs text-volcanic-300 font-light tabular-nums">
 				{getDayCount()} days

@@ -32,7 +32,17 @@
 		<div class="mt-4 h-px bg-gradient-to-r from-sand-300 via-sand-200 to-transparent"></div>
 	</div>
 
-	{#if data.trips.length === 0}
+	{#if data.trips.length === 0 && !page.data.user}
+		<div class="text-center py-24 animate-fade-in">
+			<div class="w-16 h-16 rounded-2xl bg-sand-100 flex items-center justify-center mx-auto mb-5">
+				<svg class="w-8 h-8 text-sand-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+					<path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+				</svg>
+			</div>
+			<p class="text-volcanic-400 text-lg font-light">Sign in to see your trips.</p>
+			<a href="/login" class="inline-flex items-center gap-2 mt-4 bg-volcanic-800 text-sand-50 px-5 py-2.5 rounded-full hover:bg-volcanic-700 transition-all text-sm font-medium shadow-warm">Sign in</a>
+		</div>
+	{:else if data.trips.length === 0}
 		<div class="text-center py-24 animate-fade-in">
 			<div class="w-16 h-16 rounded-2xl bg-sand-100 flex items-center justify-center mx-auto mb-5">
 				<svg class="w-8 h-8 text-sand-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">

@@ -9,6 +9,7 @@ export const trip = sqliteTable('trip', {
 	startDate: text('start_date').notNull(),
 	endDate: text('end_date').notNull(),
 	description: text('description'),
+	isPublic: integer('is_public', { mode: 'boolean' }).notNull().default(false),
 	createdBy: text('created_by').references(() => user.id),
 	createdAt: integer('created_at', { mode: 'timestamp_ms' })
 		.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)

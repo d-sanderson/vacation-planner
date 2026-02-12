@@ -40,6 +40,7 @@ export const PUT: RequestHandler = async (event) => {
 			startDate: body.startDate,
 			endDate: body.endDate,
 			description: body.description,
+			isPublic: body.isPublic,
 		})
 		.where(eq(trip.id, event.params.id));
 
